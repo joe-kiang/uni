@@ -16,10 +16,10 @@ public class WorkHours {
     @ManyToOne
     private User user;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date startWork;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date endWork;
 
     private Long timeWorked;
@@ -56,8 +56,12 @@ public class WorkHours {
         this.endWork = endWork;
     }
 
-    public Long getTimeWorked(Date startWork, Date endWork) {
-        return (this.endWork.getTime() - this.startWork.getTime()) / 1000;
+    public Long getTimeWorked() {
+        return timeWorked;
+    }
+
+    public void setTimeWorked() {
+        this.timeWorked = (this.endWork.getTime() - this.startWork.getTime()) / 1000;
     }
 
 }

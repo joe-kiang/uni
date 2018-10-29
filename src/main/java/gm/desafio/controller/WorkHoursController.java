@@ -42,6 +42,7 @@ public class WorkHoursController {
         workHours1.setUser(workHours.getUser());
         workHours1.setStartwork(workHours.getStartwork());
         workHours1.setEndWork(workHours.getEndWork());
+        workHours1.setTimeWorked();
         workHoursRepository.save(workHours1);
 
         return true;
