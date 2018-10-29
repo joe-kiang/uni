@@ -1,7 +1,7 @@
 package gm.desafio.controller;
 
 import gm.desafio.entity.User;
-import gm.desafio.exception.NotFoundExcaption;
+import gm.desafio.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import gm.desafio.repository.UserRepository;
@@ -20,25 +20,25 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public User createUser(@Valid @RequestBody User user) {
         return userRepository.save(user);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public User getUserById(@PathVariable(value = "id") Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new NotFoundExcaption("User", "id", userId ));
+        return userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User", "id", userId ));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public Boolean updateUser(@Valid @RequestBody User user, @PathVariable(value = "id") Long userId) throws  Exception{
 
-        User user1 = userRepository.findById(userId).orElseThrow(() -> new NotFoundExcaption("User", "id", userId));
+        User user1 = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User", "id", userId));
 
         user1.setName(user.getName());
         user1.setSurname(user.getSurname());
@@ -47,11 +47,11 @@ public class UserController {
         return true;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public Boolean deleteUser(@PathVariable(value = "id") Long userId) {
-        User user1 = userRepository.findById(userId).orElseThrow(() -> new NotFoundExcaption("User", "id", userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User", "id", userId));
 
-        userRepository.delete(user1);
+        userRepository.delete(user);
 
         return true;
     }
