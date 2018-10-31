@@ -1,8 +1,12 @@
 package gm.desafio.entity;
 
+import org.h2.util.DateTimeFunctions;
+import org.h2.util.DateTimeUtils;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "work_hours")
@@ -16,13 +20,19 @@ public class WorkHours {
     @ManyToOne
     private User user;
 
-    @Temporal(TemporalType.TIME)
-    private Date startWork;
-
-    @Temporal(TemporalType.TIME)
     private Date endWork;
 
     private Long timeWorked;
+
+    private Date start;
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
 
     public Long getId() {
         return id;
@@ -40,14 +50,6 @@ public class WorkHours {
         this.user = user;
     }
 
-    public Date getStartwork() {
-        return startWork;
-    }
-
-    public void setStartwork(Date startWork) {
-        this.startWork = startWork;
-    }
-
     public Date getEndWork() {
         return endWork;
     }
@@ -57,11 +59,11 @@ public class WorkHours {
     }
 
     public Long getTimeWorked() {
-        return timeWorked;
+       return TimeUnit.MILLISECONDS.toHours(this.endWork.getTime() - this.start.getTime());
     }
 
-    public void setTimeWorked() {
-        this.timeWorked = (this.endWork.getTime() - this.startWork.getTime()) / 1000;
+    public void setTimeWorked(Long timeWorked) {
+        this.timeWorked = timeWorked;
     }
 
 }

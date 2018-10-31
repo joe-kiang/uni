@@ -26,7 +26,7 @@ public class WorkHoursController {
     }
 
     @PostMapping
-    public WorkHours createWokrHours(@Valid @RequestBody WorkHours workHours) {
+    public WorkHours createWokrHours(@RequestBody WorkHours workHours) {
         return workHoursRepository.save(workHours);
     }
 
@@ -40,9 +40,8 @@ public class WorkHoursController {
         WorkHours workHours1 = workHoursRepository.findById(workId).orElseThrow(() -> new EntityNotFoundException("WorkHours", "id", workId));
 
         workHours1.setUser(workHours.getUser());
-        workHours1.setStartwork(workHours.getStartwork());
+        workHours1.setStart(workHours.getStart());
         workHours1.setEndWork(workHours.getEndWork());
-        workHours1.setTimeWorked();
         workHoursRepository.save(workHours1);
 
         return true;
