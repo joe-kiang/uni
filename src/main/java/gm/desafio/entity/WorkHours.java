@@ -1,8 +1,5 @@
 package gm.desafio.entity;
 
-import org.h2.util.DateTimeFunctions;
-import org.h2.util.DateTimeUtils;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
