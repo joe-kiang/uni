@@ -3,6 +3,7 @@ package gm.desafio.controller;
 import gm.desafio.entity.User;
 import gm.desafio.exception.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import gm.desafio.repository.UserRepository;

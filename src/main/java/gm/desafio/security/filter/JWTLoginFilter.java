@@ -2,12 +2,10 @@ package gm.desafio.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gm.desafio.security.filter.service.TokenAuthenticationService;
-import org.springframework.data.authentication.UserCredentials;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -29,23 +27,25 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     public Authentication attemptAuthentication(
             HttpServletRequest req, HttpServletResponse res)
             throws AuthenticationException, IOException, ServletException {
-        UserCredentials creds = new ObjectMapper().readValue(req.getInputStream(), UserCredentials.class);
+
+        UserCreds creds = new ObjectMapper().readValue(req.getInputStream(), UserCreds.class);
 
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
                         creds.getUsername(),
                         creds.getPassword(),
-                        Collections.<GrantedAuthority>emptyList()
-                )
+                        Collections.emptyList()
+                )                       
         );
     }
 
     @Override
     protected void successfulAuthentication(
             HttpServletRequest req,
-            HttpServletResponse res, FilterChain chain,
-            Authentication auth
-    ) throws IOException, ServletException {
+            HttpServletResponse res,
+            FilterChain chain,
+            Authentication auth)
+            throws IOException, ServletException {
         TokenAuthenticationService.addAuthentication(res, auth.getName());
     }
 }
