@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 @Entity
-@Table(name = "work_hours")
+@Table(name = "hours")
 public class WorkHours {
 
     @Id
